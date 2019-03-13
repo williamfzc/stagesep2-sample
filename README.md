@@ -29,6 +29,8 @@ docker run --rm -v ${PWD}:/root/stagesep2 williamfzc/stagesep2 python sample.py
 
 参考[官方文档](https://github.com/tesseract-ocr/tesseract/wiki)。应确保命令行运行 `tesseract` 是正常的。
 
+> 如果需要中文分析，切记需要安装 chi_sim 语言包（windows勾选即可，linux需要安装）
+
 ## 安装 [tesserocr](https://github.com/sirfz/tesserocr)
 
 参考[官方文档](https://github.com/sirfz/tesserocr#installation)。这个是 tesseract 的 python wrapper。

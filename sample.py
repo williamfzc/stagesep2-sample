@@ -9,8 +9,9 @@ video = VideoManager.add('./videos/demo.mp4')
 video.template_manager.add('./pictures/amazon.jpg')
 video.template_manager.add('./pictures/chrome.jpg')
 
-# 设定语言
-OCRConfig.lang = 'chi_sim'
+# 设定语言（这里与官方配置语法是一致的）
+# 默认 eng+chi_sim （英文+简体中文，可根据自身需要修改）
+OCRConfig.lang = 'eng+chi_sim'
 
 # 启动分析
 result1 = AnalysisRunner.run()

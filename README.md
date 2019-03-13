@@ -2,7 +2,9 @@
 
 [stagesep2](https://github.com/williamfzc/stagesep2) 的使用示例
 
-# 使用
+# 通过docker运行（推荐）
+
+因为这一块的环境配置相对来说还是比较麻烦，可以直接使用官方镜像免除这些困扰。
 
 ## 下载 sample
 
@@ -11,25 +13,27 @@ git clone https://github.com/williamfzc/stagesep2-sample.git
 cd stagesep2
 ```
 
-## 用docker（推荐）
-
-因为这一块的环境配置相对来说还是比较麻烦，可以直接使用官方镜像免除这些困扰。
+## 运行
 
 ```shell
 docker run --rm -v ${PWD}:/root/stagesep2 williamfzc/stagesep2 python sample.py
 ```
 
-## 常规方法
+理论上，此时已经能够看到 stagesep2 开始运转，有日志开始打印出来。
 
-### 安装 tesseract-ocr
+# 通过常规方法（python包）运行
+
+可能会因为环境的不同出现一些坑，但是一般都能解决。
+
+## 安装 tesseract-ocr
 
 参考[官方文档](https://github.com/tesseract-ocr/tesseract/wiki)。应确保命令行运行 `tesseract` 是正常的。
 
-### 安装 [tesserocr](https://github.com/sirfz/tesserocr)
+## 安装 [tesserocr](https://github.com/sirfz/tesserocr)
 
 参考[官方文档](https://github.com/sirfz/tesserocr#installation)。这个是 tesseract 的 python wrapper。
 
-### 安装本体
+## 安装本体
 
 使用python3。
 
@@ -37,15 +41,25 @@ docker run --rm -v ${PWD}:/root/stagesep2 williamfzc/stagesep2 python sample.py
 pip install stagesep2
 ```
 
-### 运行
+## 运行
 
 ```bash
 python sample.py
 ```
 
-## 结果示例
+# 结果示例与处理
 
-以 dict/json 形式出现。下面是数据示例：
+在分析结束后，全部的结果会以json的形式导出。比较推荐的做法是通过实际需要，自行编写脚本对json进行收集整理，最后转化成为自己需要的形式。
+
+## 图表
+
+stagesep2 也提供了简单的图表用于查看。
+
+![](pictures/sample_report.png)
+
+## json
+
+以 dict/json 形式出现的原始数据。下面是数据示例：
 
 ```
 [
@@ -97,9 +111,3 @@ python sample.py
     ...
 ]
 ```
-
-## 结果处理
-
-在分析结束后，全部的结果会以json的形式导出。比较推荐的做法是通过实际需要，自行编写脚本对json进行收集整理，最后转化成为自己需要的形式。
-
-你也可以通过stagesep2自带的结果图表对结果进行预览。

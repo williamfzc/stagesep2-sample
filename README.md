@@ -13,11 +13,21 @@ cd stagesep2
 
 ## 用docker（推荐）
 
+因为这一块的环境配置相对来说还是比较麻烦，可以直接使用官方镜像免除这些困扰。
+
 ```shell
 docker run --rm -v ${PWD}:/root/stagesep2 williamfzc/stagesep2 python sample.py
 ```
 
 ## 常规方法
+
+### 安装 tesseract-ocr
+
+参考[官方文档](https://github.com/tesseract-ocr/tesseract/wiki)。应确保命令行运行 `tesseract` 是正常的。
+
+### 安装 [tesserocr](https://github.com/sirfz/tesserocr)
+
+参考[官方文档](https://github.com/sirfz/tesserocr#installation)。这个是 tesseract 的 python wrapper。
 
 ### 安装本体
 
@@ -27,30 +37,69 @@ docker run --rm -v ${PWD}:/root/stagesep2 williamfzc/stagesep2 python sample.py
 pip install stagesep2
 ```
 
-### 安装 tesseract-ocr
-
-参考[官方文档](https://github.com/tesseract-ocr/tesseract/wiki)安装ocr。就常规应用而言，OCR达到的效果是相当好的，推荐使用。
-
-如果不想使用ocr，可以用下列方法将其去除：
-
-```python
-from stagesep2 import NormalConfig
-
-
-NormalConfig.ANALYSER_LIST = ['match_template', 'trend']
-
-# 默认：
-# NormalConfig.ANALYSER_LIST = ['ocr', 'match_template', 'trend']
-```
-
 ### 运行
 
 ```bash
 python sample.py
 ```
 
+## 结果示例
+
+以 dict/json 形式出现。下面是数据示例：
+
+```
+[
+    {
+        # 本次测试的id
+        "result_id": "6778aee8-f7cc-11e8-988d-4a0001b8c310",
+
+        # 视频名称
+        "video_name": "./temp.avi",
+
+        # 帧编号
+        "frame_id": 1,
+
+        # 帧对应的时间
+        "current_time": 0.03333333333333333,
+
+        # ocr分析结果
+        # 该列表中出现的文字即该帧中检测出来的文字
+        # 已用 jieba分词 进行进一步处理使结果更加合理
+        "ocr": [
+            "微信",
+            "支付宝"
+        ],
+
+        # match template分析结果
+        # 此处使用的算法是opencv自带的match_template
+        # 此处提供了两个值是 cv2.minMaxLoc(res) 的最值
+        # 默认算法是 cv2.TM_CCOEFF_NORMED
+        # 可以通过 MatchTemplateConfig.cv_method = cv2.TM_SQDIFF_NORMED 修改算法
+        # 参考 https://docs.opencv.org/master/d4/dc6/tutorial_py_template_matching.html
+        "match_template": {
+            "template1": {
+                "min": -0.19261789321899414,
+                "max": 0.1495080292224884
+            }
+        },
+
+        # 趋势分析结果 分别是
+        # 与前一帧的相似程度（0-1）
+        # 与视频首尾帧的相似度（0-1）
+        # 主要用于鉴定视频从何时进入稳态
+        "trend": {
+            "previous": 0.456235276681221
+            "first": 1,
+            "last": 0.9767144457213878
+        }
+    },
+
+    ...
+]
+```
+
 ## 结果处理
 
 在分析结束后，全部的结果会以json的形式导出。比较推荐的做法是通过实际需要，自行编写脚本对json进行收集整理，最后转化成为自己需要的形式。
 
-你也可以通过stagesep2自带的结果图标对结果进行预览。
+你也可以通过stagesep2自带的结果图表对结果进行预览。

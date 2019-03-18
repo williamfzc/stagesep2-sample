@@ -39,6 +39,10 @@ docker run --rm -v ${PWD}:/root/stagesep2 williamfzc/stagesep2 python sample.py
 
 ### 安装 [tesserocr](https://github.com/sirfz/tesserocr)
 
+官方推荐使用它们构建好的 wheel 文件进行安装。[传送门](https://github.com/sirfz/tesserocr#pip)
+
+或者，按照正常方式安装（可能会有问题）：
+
 - `pip install Cython`
 - `pip install tesserocr`
 
@@ -70,7 +74,7 @@ stagesep2 也提供了简单的图表用于查看。
 
 以 dict/json 形式出现的原始数据。下面是数据示例：
 
-```json
+```python
 [
     {
         # 本次测试的id

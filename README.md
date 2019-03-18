@@ -15,7 +15,7 @@ cd stagesep2
 
 ## 运行
 
-```shell
+```bash
 docker run --rm -v ${PWD}:/root/stagesep2 williamfzc/stagesep2 python sample.py
 ```
 
@@ -23,23 +23,30 @@ docker run --rm -v ${PWD}:/root/stagesep2 williamfzc/stagesep2 python sample.py
 
 # 通过常规方法（python包）运行
 
-可能会因为环境的不同出现一些坑，但是一般都能解决。
+需要 python > 3.4
 
-## 安装 tesseract-ocr
+## linux
 
-参考[官方文档](https://github.com/tesseract-ocr/tesseract/wiki)。应确保命令行运行 `tesseract` 是正常的。
+参考 [.travis.yml](https://github.com/williamfzc/stagesep2/blob/master/.travis.yml) 的配置安装即可。
 
-> 如果需要中文分析，切记需要安装 chi_sim 语言包（windows勾选即可，linux需要安装）
+## windows
 
-## 安装 [tesserocr](https://github.com/sirfz/tesserocr)
+### 安装 tesseract-ocr
 
-参考[官方文档](https://github.com/sirfz/tesserocr#installation)。这个是 tesseract 的 python wrapper。
+- 官方已经提供了 [exe下载](https://github.com/UB-Mannheim/tesseract/wiki)。
+- 在安装过程中记得勾选 chi_sim 语言包，否则无法分析中文。
+- 安装后需要配置环境变量，应确保命令行运行 `tesseract` 是正常的。
+
+### 安装 [tesserocr](https://github.com/sirfz/tesserocr)
+
+- `pip install Cython`
+- `pip install tesserocr`
+
+如果在安装时报 `error: Microsoft Visual C++ 14.0 is required.` ，[点此安装即可](http://download.microsoft.com/download/6/A/A/6AA4EDFF-645B-48C5-81CC-ED5963AEAD48/vc_redist.x64.exe)。安装完成后重新安装 tesserocr。
 
 ## 安装本体
 
-使用python3。
-
-```
+```bash
 pip install stagesep2
 ```
 
@@ -63,7 +70,7 @@ stagesep2 也提供了简单的图表用于查看。
 
 以 dict/json 形式出现的原始数据。下面是数据示例：
 
-```
+```json
 [
     {
         # 本次测试的id
